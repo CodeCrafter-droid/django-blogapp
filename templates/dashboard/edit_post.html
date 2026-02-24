@@ -1,0 +1,39 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div class="row">
+{% include 'dashboard/common.html' %}
+
+<div class="col-md-9 ">
+    <div class="row justify-content-center">
+        <div class="col-md-8 col-lg-6">
+
+            <div class="card p-4 shadow-sm">
+                <form action="{% url 'edit_post' post.id %}" method="post">
+                    {% csrf_token %}
+
+                    {% for field in form %}
+                    <div class="form-group">
+                        <label>
+                            {{ field.label }}
+                            {% if field.field.required %}
+                                <span class="text-danger">*</span>
+                            {% endif %}
+                        </label>
+                        {{ field }}
+                    </div>
+                    {% endfor %}
+
+                    <button type="submit" class="btn btn-warning btn-block">
+                        Update
+                    </button>
+                </form>
+            </div>
+
+        </div>
+    </div>
+</div>
+</div>
+
+{% endblock %}

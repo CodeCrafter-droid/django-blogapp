@@ -1,0 +1,26 @@
+{% extends 'base.html'  %}
+
+{% block content %}
+
+<small class="mb-1 text-muted">Category</small>
+<h1 class="test-uppercase text-warning" style="letter-spacing: 2px;" >{{cat}}</h1>
+<div class="row mb-2">
+    {% if posts %}
+    {% for post in posts %}
+    <div class="col-md-6">
+      <div class="card border-0" >
+        <div class="card-body">
+          <a href="{% url 'blogspage' post.slug %}" style="color: black; text-decoration: none;"><h3>{{post.title}}</h3></a>
+          <small class="mb-1 text-muted">{{post.updated_at | timesince}} ago | {{post.author}}</small>
+          <p class="card-text">{{post.short_description}}</p>
+        </div>
+      </div>
+    </div>
+    {% endfor %}
+    {% else %}
+    <p class="card-text">No post found</p>
+    {% endif %}
+  </div>
+</div>
+
+{% endblock %}
