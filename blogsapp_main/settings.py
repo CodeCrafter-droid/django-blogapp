@@ -48,6 +48,10 @@ INSTALLED_APPS = [
     'dashboard',
     'cloudinary',
     'cloudinary_storage',
+    'api',
+    'rest_framework',
+    'drf_spectacular',
+    'django_filters',
 ]
 
 MIDDLEWARE = [
@@ -158,6 +162,39 @@ STORAGES = {
     },
 }
 
+REST_FRAMEWORK = {
+'DEFAULT_SCHEMA_CLASS' : 'drf_spectacular.openapi.AutoSchema',
+
+'DEFAULT_AUTHENTICATION_CLASSES':
+(
+    'rest_framework.authentication.SessionAuthentication',
+    'rest_framework_simplejwt.authentication.JWTAuthentication',
+
+),
+
+'DEFAULT_PERMISSION_CLASSES':
+(
+    'rest_framework.permissions.IsAuthenticatedOrReadOnly',
+),
+
+'DEFAULT_PAGINATION_CLASS': 
+    'rest_framework.pagination.PageNumberPagination',
+    'PAGE_SIZE': 2,
+
+'DEFAULT_FILTER_BACKENDS':
+ (
+        'django_filters.rest_framework.DjangoFilterBackend',
+),
+
+}
+
+
+SIMPLE_JWT = {
+    'ACCESS_TOKEN_LIFETIME': timedelta(hours=1),
+    'REFRESH_TOKEN_LIFETIME': timedelta(days=7),
+}
+
+
 MEDIA_URL = '/media/'
 MEDIA_ROOT = BASE_DIR / 'media'
 
@@ -166,3 +203,4 @@ LOGOUT_REDIRECT_URL = '/'
 
 SESSION_COOKIE_AGE = 60 * 60 * 24 # 1 day 
 SESSION_SAVE_EVERY_REQUEST = True
+
