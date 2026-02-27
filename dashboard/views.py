@@ -49,7 +49,14 @@ def edit_category(request, pk):
     return render(request, 'dashboard/edit_category.html', {'form': form, 'cat':categoryy})
 
 def post(request):
-    posts = blog.objects.all()
+    user = request.user
+
+    if user.groups.filter(name='Manager').exists() or user.is_superuser:
+        posts = blog.objects.all()
+
+    # If user is Editor → show only their posts
+    elif user.groups.filter(name='Editor').exists():
+        posts = blog.objects.filter(author=user)
     
     return render(request,'dashboard/post.html',{'posts':posts})
 
@@ -102,7 +109,7 @@ def edit_post(request, pk):
 
 def users(request):
     who = request.user
-    current_user = User.objects.filter(id=request.user.id)
+    
     if not who.is_superuser:
         user = User.objects.filter(is_superuser=False)
     else:

@@ -8,7 +8,24 @@
 <div class="col-md-9 ">
     <div class="row justify-content-center">
         <div class="col-md-8 col-lg-6">
+            {% if form.errors %}
+                <div class="alert alert-danger alert-dismissible fade show" role="alert"">
+                    <ul class="mb-0">
+                        {% for field in form %}
+                            {% for error in field.errors %}
+                                <li>{{ error }}</li>
+                            {% endfor %}
+                        {% endfor %}
 
+                        {% for error in form.non_field_errors %}
+                            <li>{{ error }}</li>
+                        {% endfor %}
+                    </ul>
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+            {% endif %}
             <div class="card p-4 shadow-sm">
                 <form action="{% url 'add_post' %}" method="post" enctype="multipart/form-data">
                     {% csrf_token %}

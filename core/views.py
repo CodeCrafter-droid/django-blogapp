@@ -12,7 +12,6 @@ def home(request):
     context ={
         'blogs':blogs,
     }
-    print(blogs)
     return render(request,'home.html',context)
 
 def post_by_category(request, categoryid):
